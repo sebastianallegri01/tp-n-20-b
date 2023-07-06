@@ -1,0 +1,106 @@
+#include <iostream>
+#include <vector>
+#include <random>
+
+std::vector<int> generarVector(int N) {
+    std::vector<int> A;
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<int> dist(0, 31999);
+
+    for (int i = 0; i < N; i++) {
+        A.push_back(dist(mt));
+    }
+
+    return A;
+}
+
+float calcularPromedio(const std::vector<int>& A) {
+    int suma = 0;
+    for (int num : A) {
+        suma += num;
+    }
+    return static_cast<float>(suma) / A.size();
+}
+
+std::vector<int> generarVectorB(const std::vector<int>& A, float promedio) {
+    std::vector<int> B;
+    for (int num : A) {
+        if (num > promedio) {
+            B.push_back(num);
+        }
+    }
+    return B;
+}
+
+int contarMultiplosDosYTres(const std::vector<int>& A) {
+    int contador = 0;
+    for (int num : A) {
+        if (num % 2 == 0 && num % 3 == 0) {
+            contador++;
+        }
+    }
+    return contador;
+}
+
+int calcularSuma(const std::vector<int>& A) {
+    int suma = 0;
+    for (int num : A) {
+        suma += num;
+    }
+    return suma;
+}
+
+std::vector<int> generarVectorC(const std::vector<int>& A) {
+    std::vector<int> C;
+    for (int num : A) {
+        C.push_back(num * 2);
+    }
+    return C;
+}
+
+void mostrarResultados(const std::vector<int>& A, const std::vector<int>& B, const std::vector<int>& C, float promedio, int suma, int cantidadMultiplos) {
+    std::cout << "Vector A: ";
+    for (int num : A) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "Vector B (elementos mayores al promedio): ";
+    for (int num : B) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "Vector C (elementos de A multiplicados por 2): ";
+    for (int num : C) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "Promedio de los elementos de A: " << promedio << std::endl;
+    std::cout << "Suma de los elementos de A: " << suma << std::endl;
+    std::cout << "Cantidad de elementos que son múltiplos de 2 y 3: " << cantidadMultiplos << std::endl;
+}
+
+int main() {
+    int N;
+    std::cout << "Ingrese la cantidad de elementos del vector: ";
+    std::cin >> N;
+
+    std::vector<int> A = generarVector(N);
+
+    float promedio = calcularPromedio(A);
+
+    std::vector<int> B = generarVectorB(A, promedio);
+
+    int cantidadMultiplos = contarMultiplosDosYTres(A);
+
+    int suma = calcularSuma(A);
+
+    std::vector<int> C = generarVectorC(A);
+
+    mostrarResultados(A, B, C, promedio, suma, cantidadMultiplos);
+
+    return 0;
+}
